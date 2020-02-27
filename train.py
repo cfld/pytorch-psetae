@@ -162,10 +162,10 @@ def main(config):
     torch.manual_seed(config['rdm_seed'])
     prepare_output(config)
 
-    mean_std = pkl.load(open(config['dataset_folder'] + '/S2-2017-T31TFM-meanstd.pkl', 'rb'))
+    mean_std = pkl.load(open(config['dataset_folder'] + '/CV4A-meanstd.pkl', 'rb'))
     extra = 'geomfeat' if config['geomfeat'] else None
     dt = PixelSetData(config['dataset_folder'], labels='label_44class', npixel=config['npixel'],
-                      sub_classes=[1, 3, 4, 5, 6, 8, 9, 12, 13, 14, 16, 18, 19, 23, 28, 31, 33, 34, 36, 39],
+                      sub_classes=[1,2,3,4,5,6,7],
                       norm=mean_std,
                       extra_feature=extra)
     device = torch.device(config['device'])
@@ -262,9 +262,9 @@ if __name__ == '__main__':
     # Architecture Hyperparameters
     ## PSE
     parser.add_argument('--input_dim', default=10, type=int, help='Number of channels of input images')
-    parser.add_argument('--mlp1', default='[10,32,64]', type=str, help='Number of neurons in the layers of MLP1')
+    parser.add_argument('--mlp1', default='[13,32,64]', type=str, help='Number of neurons in the layers of MLP1')
     parser.add_argument('--pooling', default='mean_std', type=str, help='Pixel-embeddings pooling strategy')
-    parser.add_argument('--mlp2', default='[132,128]', type=str, help='Number of neurons in the layers of MLP2')
+    parser.add_argument('--mlp2', default='[128,128]', type=str, help='Number of neurons in the layers of MLP2')
     parser.add_argument('--geomfeat', default=1, type=int,
                         help='If 1 the precomputed geometrical features (f) are used in the PSE.')
 
